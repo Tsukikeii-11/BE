@@ -1,8 +1,8 @@
 # Middleware functions for processing requests and responses
 
-from flask import request, jsonify
+from flask import  request, jsonify
 
-def log_request_info():
+def log_request_info(app):
     app.logger.debug('Headers: %s', request.headers)
     app.logger.debug('Body: %s', request.get_data())
 
@@ -21,7 +21,7 @@ def add_custom_headers(response):
 def middleware(app):
     @app.before_request
     def before_request():
-        log_request_info()
+        log_request_info(app)
 
     @app.after_request
     def after_request(response):

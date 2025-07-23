@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from src.services.todo_service import TodoService
-from src.infrastructure.repositories.todo_repository import TodoRepository
-from src.api.schemas.todo import TodoRequestSchema, TodoResponseSchema
+from services.todo_service import TodoService
+from infrastructure.repositories.todo_repository import TodoRepository
+from api.schemas.todo import TodoRequestSchema, TodoResponseSchema
 from datetime import datetime
 
 bp = Blueprint('todo', __name__, url_prefix='/todos')
@@ -14,6 +14,23 @@ response_schema = TodoResponseSchema()
 
 @bp.route('/', methods=['GET'])
 def list_todos():
+    """
+    Get all todos
+    ---
+    get:
+      summary: Get all todos
+      tags:
+        - Todos
+      responses:
+        200:
+          description: List of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TodoResponse'
+    """
     todos = todo_service.list_todos()
     return jsonify(response_schema.dump(todos, many=True)), 200
 
