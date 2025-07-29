@@ -63,3 +63,6 @@
    - Bước 4: Chạy mã xử lý dữ liệu
      ## Run:
     		python app.py
+
+
+     Truy câp [http:://](http://localhost:6868/docs)
