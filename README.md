@@ -65,4 +65,4 @@
     		python app.py
 
 
-     Truy câp [http:://](http://localhost:6868/docs)
+     Truy câp http://localhost:6868/docs
