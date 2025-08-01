@@ -44,6 +44,10 @@
 
 ## Infrastructure Layer
 
+## Download source code (CMD)
+    git clone https://github.com/ChienNguyensrdn/Flask-CleanArchitecture.git
+## Kiểm tra đã cài python đã cài đặt trên máy chưa
+    python --version
 ## Run app
 
  - Bước 1: Tạo môi trường ảo co Python (phiên bản 3.x)
