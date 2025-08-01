@@ -53,7 +53,7 @@
      		python3 -m venv .venv
    - Bước 2: Kích hoạt môi trường:
      ## Windows:
-     		.venv\Scripts\activate.bat
+     		.venv\Scripts\activate.ps1
      ## Unix/MacOS:
      		source .venv/bin/activate
      
