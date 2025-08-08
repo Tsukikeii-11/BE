@@ -5,7 +5,7 @@ from infrastructure.databases.base import Base
 
 # Database configuration
 DATABASE_URL = Config.DATABASE_URI
-print(DATABASE_URL)
+# print(DATABASE_URL)
 # Create a new SQLAlchemy engine instance
 engine = create_engine(DATABASE_URL)
 

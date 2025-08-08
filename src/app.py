@@ -26,7 +26,10 @@ def create_app():
     )
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
-    init_db(app)
+    try:
+        init_db(app)
+    except Exception as e:
+        print(f"Error initializing database: {e}")
 
     # Register middleware
     middleware(app)
