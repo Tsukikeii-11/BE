@@ -72,3 +72,39 @@
 
 
      Truy câp http://localhost:6868/docs
+
+
+
+## Create file .env in folder /src/.env
+    
+    # Flask settings
+    FLASK_ENV=development
+    SECRET_KEY=your_secret_key
+    
+    # SQL Server settings
+    DB_USER=sa
+    DB_PASSWORD=Aa@123456
+    DB_HOST=127.0.0.1
+    DB_PORT=1433
+    DB_NAME=FlaskApiDB
+    
+    
+    DATABASE_URI = "mssql+pymssql://sa:Aa%40123456@127.0.0.1:1433/FlaskApiDB"
+
+## pull image MS SQL server 
+    
+    ```bash
+    docker pull mcr.microsoft.com/mssql/server:2025-latest
+    ```
+## Install MS SQL server in docker 
+    ```bash
+    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Aa123456" -p 1433:1433 --name sql1 --hostname sql1 -d  mcr.microsoft.com/mssql/server:2025-latest
+    ```
+## Test connect SQL server 
+
+## ORM Flask (from sqlalchemy.orm )
+Object Relational Mapping
+
+Ánh xạ 1 class (OOP)  model src/infrastructure/models --> Table in database 
+Ánh xạ các mối quan hệ (Relational) -- Khoá ngoại CSDL 
+(n-n): many to many 
