@@ -35,11 +35,10 @@ def create_app():
     middleware(app)
 
     # Register routes
-    # Example: app.add_url_rule('/example', view_func=example_view)
-    # Tự động quét tất cả các route đã đăng ký
     with app.test_request_context():
         for rule in app.url_map.iter_rules():
-            if rule.endpoint.startswith('todo.'):
+            # Thêm các endpoint khác nếu cần
+            if rule.endpoint.startswith(('todo.', 'course.', 'user.')):
                 view_func = app.view_functions[rule.endpoint]
                 print(f"Adding path: {rule.rule} -> {view_func}")
                 spec.path(view=view_func)
