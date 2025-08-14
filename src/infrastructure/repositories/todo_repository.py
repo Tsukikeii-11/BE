@@ -19,8 +19,16 @@ class TodoRepository(ITodoRepository):
         self._id_counter = 1
         self.session = session
 
-    def add(self, todo: TodoModel) -> TodoModel:
+    def add(self, todo: Todo) -> TodoModel:
         try:
+            #Manual mapping from Todo to TodoModel
+            todo = TodoModel(
+                title=todo.title,
+                description=todo.description,
+                status=todo.status,
+                created_at=todo.created_at,
+                updated_at=todo.updated_at
+            )
             self.session.add(todo)
             self.session.commit()
             self.session.refresh(todo)
@@ -62,5 +70,17 @@ class TodoRepository(ITodoRepository):
             self.session.close()
 
     def delete(self, todo_id: int) -> None:
-        self._todos = [t for t in self._todos if t.id != todo_id] 
+        # self._todos = [t for t in self._todos if t.id != todo_id] 
+        try:
+            todo = self.session.query(TodoModel).filter_by(id=todo_id).first()
+            if todo:
+                self.session.delete(todo)
+                self.session.commit()
+            else:
+                raise ValueError('Todo not found')
+        except Exception as e:
+            self.session.rollback()
+            raise ValueError('Todo not found')
+        finally:
+            self.session.close()
 
