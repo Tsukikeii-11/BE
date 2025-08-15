@@ -60,6 +60,15 @@ class TodoRepository(ITodoRepository):
 
     def update(self, todo: TodoModel) -> TodoModel:
         try:
+             #Manual mapping from Todo to TodoModel
+            todo = TodoModel(
+                id = todo.id,
+                title=todo.title,
+                description=todo.description,
+                status=todo.status,
+                created_at=todo.created_at,
+                updated_at=todo.updated_at
+            )
             self.session.merge(todo)
             self.session.commit()
             return todo
