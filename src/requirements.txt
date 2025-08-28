@@ -1,0 +1,7 @@
+Flask
+flask-restx
+marshmallow
+Flask-SQLAlchemy
+SQLAlchemy
+pyodbc
+Werkzeug
