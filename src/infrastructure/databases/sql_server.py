@@ -2,10 +2,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.engine import URL
-from src.infrastructure.models.base import Base
-from src.infrastructure.models.user_models import *
-from src.infrastructure.models.assessment_models import *
-
+from src.infrastructure.databases.base import Base
+from src.infrastructure.models.user import *
+from src.infrastructure.models.assessment_receipt import *
+from src.infrastructure.models.assessment_request import *
+from src.infrastructure.models.assessment_result import *
 def create_sql_server_engine(server_name: str, database_name: str):
     """
     Tạo engine kết nối tới cơ sở dữ liệu SQL Server.

@@ -5,9 +5,9 @@ This class handles the connection and session management for Microsoft SQL Serve
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.infrastructure.databases.base import DatabaseBase
+from src.infrastructure.databases.base import Base
 
-class MSSQLDatabase(DatabaseBase):
+class MSSQLDatabase(Base):
     """
     Concrete implementation for connecting to a Microsoft SQL Server database.
     """
