@@ -108,3 +108,6 @@ Object Relational Mapping
 Ánh xạ 1 class (OOP)  model src/infrastructure/models --> Table in database 
 Ánh xạ các mối quan hệ (Relational) -- Khoá ngoại CSDL 
 (n-n): many to many 
+# BE
+BE dự án CNPM (flask api python)
+
