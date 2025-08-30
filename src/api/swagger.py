@@ -5,11 +5,19 @@ This module creates and initializes the API namespaces for documentation.
 from flask_restx import Api
 
 api = Api(
-    version='1.0',
-    title='Diamond Assessment API',
-    description='A comprehensive API for managing diamond assessment services.',
-    # Define the documentation endpoint
-    doc='/docs'
+    version='1.0.0',
+    title='Diamond Assessment System API',
+    description='A comprehensive API for managing diamond assessment services including users, services, assessment requests, results, certificates, and approvals.',
+    doc='/docs',
+    authorizations={
+        'apikey': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "Type 'Bearer <JWT>' where JWT is the token"
+        }
+    },
+    security='apikey'
 )
 
 def init_swagger_docs(app):
@@ -20,13 +28,13 @@ def init_swagger_docs(app):
         app: The Flask application instance.
     """
     # Import the namespace objects from your controller files
-    from src.api.controllers.user_controller import api as user_ns
-    from src.api.controllers.service_controller import api as service_ns
-    from src.api.controllers.assessment_request_controller import api as assessment_request_ns
-    from src.api.controllers.assessment_receipt_controller import api as assessment_receipt_ns
-    from src.api.controllers.assessment_result_controller import api as assessment_result_ns
-    from src.api.controllers.certificate_controller import api as certificate_ns
-    from src.api.controllers.manager_approval_controller import api as manager_approval_ns
+    from api.controllers.user_controller import api as user_ns
+    from api.controllers.service_controller import api as service_ns
+    from api.controllers.assessment_request_controller import api as assessment_request_ns
+    from api.controllers.assessment_receipt_controller import api as assessment_receipt_ns
+    from api.controllers.assessment_result_controller import api as assessment_result_ns
+    from api.controllers.certificate_controller import api as certificate_ns
+    from api.controllers.manager_approval_controller import api as manager_approval_ns
 
     # Add each namespace to the main API
     api.add_namespace(user_ns, path='/api/users')

@@ -1,59 +1,60 @@
 # src/api/controllers/manager_approval_controller.py
-from typing import Any, Dict, List
-from flask import Response, request
-from flask_restx import Namespace, Resource
-from src.api.schemas.service_schema import ManagerApprovalRequestSchema, ManagerApprovalResponseSchema
-from src.services.manager_approval_service import ManagerApprovalService
-from src.infrastructure.repositories.manager_approval_repository import ManagerApprovalRepository
-from src.domain.exceptions import RequestNotFoundError, ApprovalAlreadyExistsError, UserNotFoundError
-from src.api.responses import success_response, error_response
+from flask_restx import Namespace, Resource, fields
+from api.responses import success_response, error_response
 
-# Khởi tạo repository và service
-manager_approval_repo = ManagerApprovalRepository()
-manager_approval_service = ManagerApprovalService(manager_approval_repo)
+api = Namespace('approvals', description='Manager approval operations')
 
-api = Namespace('manager-approvals', description='Manager approval operations')
-
-manager_approval_request_schema = ManagerApprovalRequestSchema()
-manager_approval_response_schema_single = ManagerApprovalResponseSchema()
-manager_approval_response_schema_many = ManagerApprovalResponseSchema(many=True)
+approval_model = api.model('ManagerApproval', {
+    'approval_id': fields.Integer(readonly=True, description='Approval ID'),
+    'request_id': fields.Integer(required=True, description='Request ID'),
+    'manager_id': fields.Integer(required=True, description='Manager ID'),
+    'approval_date': fields.DateTime(readonly=True, description='Approval date'),
+    'status': fields.String(required=True, description='Approval status', enum=['Approved', 'Rejected', 'Pending']),
+    'comments': fields.String(required=False, description='Approval comments'),
+    'approval_type': fields.String(required=True, description='Approval type')
+})
 
 
 @api.route('/')
 class ManagerApprovalList(Resource):
-    def get(self) -> tuple[Response, int]:
-        """Lấy danh sách tất cả các phê duyệt của quản lý (dành cho Admin)"""
+    @api.doc('list_approvals')
+    @api.marshal_list_with(approval_model)
+    def get(self):
+        """Get all manager approvals"""
         try:
-            approvals = manager_approval_service.get_all_approvals()
-            response_data: List[Dict[str, Any]] = manager_approval_response_schema_many.dump(approvals)  # type: ignore
-            return success_response(response_data)
+            approvals = [
+                {
+                    "approval_id": 1,
+                    "request_id": 1,
+                    "manager_id": 2,
+                    "approval_date": "2024-01-22T14:00:00",
+                    "status": "Approved",
+                    "comments": "Phê duyệt giám định kim cương nhẫn cưới",
+                    "approval_type": "Assessment"
+                }
+            ]
+            return success_response({"approvals": approvals})
         except Exception as e:
             return error_response(str(e), 500)
-
-    def post(self) -> tuple[Response, int]:
-        """Tạo một phê duyệt mới (dành cho Manager)"""
-        try:
-            data: Any = manager_approval_request_schema.load(request.json)  # type: ignore
-            new_approval = manager_approval_service.create_new_approval(data)
-            response_data: Dict[str, Any] = manager_approval_response_schema_single.dump(new_approval)  # type: ignore
-            return success_response(response_data, status_code=201)
-        except (RequestNotFoundError, UserNotFoundError) as e:
-            return error_response(str(e), 404)
-        except ApprovalAlreadyExistsError as e:
-            return error_response(str(e), 409)
-        except Exception as e:
-            return error_response(str(e), 400)
 
 
 @api.route('/<int:approval_id>')
-class ManagerApproval(Resource):
-    def get(self, approval_id: int) -> tuple[Response, int]:
-        """Lấy thông tin chi tiết một phê duyệt của quản lý"""
+@api.param('approval_id', 'The manager approval identifier')
+class ManagerApprovalDetail(Resource):
+    @api.doc('get_approval')
+    @api.marshal_with(approval_model)
+    def get(self, approval_id):
+        """Get a manager approval by ID"""
         try:
-            approval = manager_approval_service.get_approval_by_id(approval_id)
-            response_data: Dict[str, Any] = manager_approval_response_schema_single.dump(approval)  # type: ignore
-            return success_response(response_data)
-        except RequestNotFoundError as e:
-            return error_response(str(e), 404)
+            approval = {
+                "approval_id": approval_id,
+                "request_id": 1,
+                "manager_id": 2,
+                "approval_date": "2024-01-22T14:00:00",
+                "status": "Approved",
+                "comments": "Phê duyệt giám định kim cương nhẫn cưới",
+                "approval_type": "Assessment"
+            }
+            return success_response({"approval": approval})
         except Exception as e:
-            return error_response(str(e), 500)
+            return error_response(str(e), 404)

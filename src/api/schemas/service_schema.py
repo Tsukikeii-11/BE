@@ -2,7 +2,7 @@
 Đây là file schema tổng hợp cho các đối tượng liên quan đến dịch vụ và giám định.
 """
 from marshmallow import Schema, fields, validate
-from src.api.schemas.user_schema import UserProfileResponseSchema
+from api.schemas.user_schema import UserProfileResponseSchema
 
 # Schema cho yêu cầu tạo và cập nhật dịch vụ
 class ServiceRequestSchema(Schema):

@@ -2,7 +2,7 @@
 This module defines middleware functions that handle cross-cutting concerns
 such as request logging, adding custom headers, etc.
 """
-from flask import request
+from flask import request, current_app
 
 def log_request_info(app):
     """
@@ -10,15 +10,15 @@ def log_request_info(app):
     """
     @app.before_request
     def log_before_request():
-        app.logger.info(f"Incoming request: {request.method} {request.path}")
-        app.logger.debug(f"Headers: {request.headers}")
+        current_app.logger.info(f"Incoming request: {request.method} {request.path}")
+        current_app.logger.debug(f"Headers: {request.headers}")
         try:
             if request.is_json:
-                app.logger.debug(f"JSON Body: {request.json}")
+                current_app.logger.debug(f"JSON Body: {request.json}")
             else:
-                app.logger.debug(f"Raw Body: {request.get_data()}")
+                current_app.logger.debug(f"Raw Body: {request.get_data()}")
         except Exception as e:
-            app.logger.error(f"Error logging request body: {e}")
+            current_app.logger.error(f"Error logging request body: {e}")
 
 def add_custom_headers(app):
     """

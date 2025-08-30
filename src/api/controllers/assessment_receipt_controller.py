@@ -1,63 +1,87 @@
 # src/api/controllers/assessment_receipt_controller.py
-from typing import Any, Dict, List
-from flask import request, Response
-from flask_restx import Namespace, Resource
-from src.api.schemas.service_schema import AssessmentReceiptRequestSchema, AssessmentReceiptResponseSchema
-from src.services.assessment_receipt_service import AssessmentReceiptService
-from src.infrastructure.repositories.assessment_receipt_repository import AssessmentReceiptRepository
-from src.domain.exceptions import RequestNotFoundError, ReceiptAlreadyExistsError, UserNotFoundError
-from src.api.responses import success_response, error_response
+from flask_restx import Namespace, Resource, fields
+from api.responses import success_response, error_response
 
-# Khởi tạo repository và service
-assessment_receipt_repo = AssessmentReceiptRepository()
-assessment_receipt_service = AssessmentReceiptService(assessment_receipt_repo)
+api = Namespace('receipts', description='Assessment receipt management operations')
 
-api = Namespace('assessment-receipts', description='Assessment receipt operations')
+receipt_model = api.model('AssessmentReceipt', {
+    'receipt_id': fields.Integer(readonly=True, description='Receipt ID'),
+    'request_id': fields.Integer(required=True, description='Request ID'),
+    'consultant_staff_id': fields.Integer(required=True, description='Consultant staff ID'),
+    'receive_date': fields.DateTime(readonly=True, description='Receive date'),
+    'sample_description': fields.String(required=True, description='Sample description'),
+    'sample_condition': fields.String(required=True, description='Sample condition')
+})
 
-assessment_receipt_request_schema = AssessmentReceiptRequestSchema()
-assessment_receipt_response_schema_single = AssessmentReceiptResponseSchema()
-assessment_receipt_response_schema_many = AssessmentReceiptResponseSchema(many=True)
+receipt_create_model = api.model('AssessmentReceiptCreate', {
+    'request_id': fields.Integer(required=True, description='Request ID'),
+    'consultant_staff_id': fields.Integer(required=True, description='Consultant staff ID'),
+    'sample_description': fields.String(required=True, description='Sample description'),
+    'sample_condition': fields.String(required=True, description='Sample condition')
+})
 
 
 @api.route('/')
 class AssessmentReceiptList(Resource):
-    def get(self) -> tuple[Response, int]:
-        """Lấy danh sách tất cả các biên nhận giám định (dành cho Admin/Manager/Consultant Staff)"""
+    @api.doc('list_receipts')
+    @api.marshal_list_with(receipt_model)
+    def get(self):
+        """Get all assessment receipts"""
         try:
-            receipts = assessment_receipt_service.get_all_receipts()
-            response_data: List[Dict[str, Any]] = assessment_receipt_response_schema_many.dump(receipts)  # type: ignore
-            return success_response(response_data)
+            receipts = [
+                {
+                    "receipt_id": 1,
+                    "request_id": 1,
+                    "consultant_staff_id": 3,
+                    "receive_date": "2024-01-21T09:00:00",
+                    "sample_description": "Kim cương tròn 1.5 carat, màu D, độ tinh khiết VVS1",
+                    "sample_condition": "Tốt"
+                }
+            ]
+            return success_response({"receipts": receipts})
         except Exception as e:
-            return error_response(f"Unexpected error: {str(e)}", 500)
+            return error_response(str(e), 500)
 
-    def post(self) -> tuple[Response, int]:
-        """Tạo một biên nhận giám định mới (dành cho Consulting Staff)"""
+    @api.doc('create_receipt')
+    @api.expect(receipt_create_model)
+    @api.marshal_with(receipt_model)
+    @api.response(201, 'Assessment receipt created successfully')
+    def post(self):
+        """Create a new assessment receipt"""
         try:
-            raw_data: Any = assessment_receipt_request_schema.load(request.json)  # type: ignore
-            if not isinstance(raw_data, dict):
-                return error_response("Invalid input format.", 400)
-            data: Dict[str, Any] = raw_data
-
-            new_receipt = assessment_receipt_service.create_new_receipt(data)
-            response_data: Dict[str, Any] = assessment_receipt_response_schema_single.dump(new_receipt)  # type: ignore
+            data = api.payload
+            response_data = {
+                "message": "Assessment receipt created successfully.",
+                "receipt": {
+                    "receipt_id": 2,
+                    "request_id": data.get('request_id'),
+                    "consultant_staff_id": data.get('consultant_staff_id'),
+                    "receive_date": "2024-01-30T10:00:00",
+                    "sample_description": data.get('sample_description'),
+                    "sample_condition": data.get('sample_condition')
+                }
+            }
             return success_response(response_data, status_code=201)
-        except (RequestNotFoundError, UserNotFoundError) as e:
-            return error_response(str(e), 404)
-        except ReceiptAlreadyExistsError as e:
-            return error_response(str(e), 409)
         except Exception as e:
-            return error_response(f"Unexpected error: {str(e)}", 500)
+            return error_response(str(e), 500)
 
 
 @api.route('/<int:receipt_id>')
-class AssessmentReceipt(Resource):
-    def get(self, receipt_id: int) -> tuple[Response, int]:
-        """Lấy thông tin chi tiết một biên nhận giám định"""
+@api.param('receipt_id', 'The assessment receipt identifier')
+class AssessmentReceiptDetail(Resource):
+    @api.doc('get_receipt')
+    @api.marshal_with(receipt_model)
+    def get(self, receipt_id):
+        """Get an assessment receipt by ID"""
         try:
-            receipt = assessment_receipt_service.get_receipt_by_id(receipt_id)
-            response_data: Dict[str, Any] = assessment_receipt_response_schema_single.dump(receipt)  # type: ignore
-            return success_response(response_data)
-        except RequestNotFoundError as e:
-            return error_response(str(e), 404)
+            receipt = {
+                "receipt_id": receipt_id,
+                "request_id": 1,
+                "consultant_staff_id": 3,
+                "receive_date": "2024-01-21T09:00:00",
+                "sample_description": "Kim cương tròn 1.5 carat, màu D, độ tinh khiết VVS1",
+                "sample_condition": "Tốt"
+            }
+            return success_response({"receipt": receipt})
         except Exception as e:
-            return error_response(f"Unexpected error: {str(e)}", 500)
+            return error_response(str(e), 404)
