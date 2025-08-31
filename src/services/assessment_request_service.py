@@ -1,7 +1,7 @@
 """
 AssessmentRequestService for business logic related to assessment requests.
 """
-from src.infrastructure.repositories.assessment_request_repository import AssessmentRequestRepository
+from infrastructure.repositories.assessment_request_repository import AssessmentRequestRepository
 from typing import Dict, Any, Optional, List
 
 class AssessmentRequestService:

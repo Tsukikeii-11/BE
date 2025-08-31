@@ -1,8 +1,8 @@
 """
 ServiceRepository for handling database operations related to Service.
 """
-from src.infrastructure.models.service import Service
-from src.infrastructure.databases.database import db
+from infrastructure.models.service import Service
+from infrastructure.databases.database import db
 
 class ServiceRepository:
     def __init__(self):

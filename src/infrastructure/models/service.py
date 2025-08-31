@@ -2,7 +2,7 @@
 Service database model.
 This model maps directly to the database table for services.
 """
-from src.infrastructure.databases.database import db
+from infrastructure.databases.database import db
 from sqlalchemy import Numeric
 
 class Service(db.Model):

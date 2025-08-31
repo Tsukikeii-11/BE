@@ -2,7 +2,7 @@
 AssessmentRequest database model.
 This model maps directly to the database table for assessment requests.
 """
-from src.infrastructure.databases.database import db
+from infrastructure.databases.database import db
 from sqlalchemy.sql import func
 
 class AssessmentRequest(db.Model):

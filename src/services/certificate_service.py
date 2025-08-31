@@ -1,7 +1,7 @@
 """
 CertificateService for business logic related to certificates.
 """
-from src.infrastructure.repositories.certificate_repository import CertificateRepository
+from infrastructure.repositories.certificate_repository import CertificateRepository
 from typing import Dict, Any, Optional, List
 
 class CertificateService:

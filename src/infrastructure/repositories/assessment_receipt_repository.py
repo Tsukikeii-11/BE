@@ -1,8 +1,8 @@
 """
 AssessmentReceiptRepository for handling database operations related to AssessmentReceipt.
 """
-from src.infrastructure.models.assessment_receipt import AssessmentReceipt
-from src.infrastructure.databases.database import db
+from infrastructure.models.assessment_receipt import AssessmentReceipt
+from infrastructure.databases.database import db
 
 class AssessmentReceiptRepository:
     def __init__(self):

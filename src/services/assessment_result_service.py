@@ -1,7 +1,7 @@
 """
 AssessmentResultService for business logic related to assessment results.
 """
-from src.infrastructure.repositories.assessment_result_repository import AssessmentResultRepository
+from infrastructure.repositories.assessment_result_repository import AssessmentResultRepository
 from typing import Dict, Any, Optional, List
 
 class AssessmentResultService:

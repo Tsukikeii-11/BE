@@ -1,7 +1,7 @@
 """
 ServiceService for business logic related to services.
 """
-from src.infrastructure.repositories.service_repository import ServiceRepository
+from infrastructure.repositories.service_repository import ServiceRepository
 from typing import Dict, Any, Optional, List
 
 class ServiceService:

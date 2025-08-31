@@ -1,8 +1,8 @@
 """
 UserRepository for handling database operations related to User, UserProfile, and Role.
 """
-from src.infrastructure.models.user import User, UserProfile, Role
-from src.infrastructure.databases.database import db
+from infrastructure.models.user import User, UserProfile, Role
+from infrastructure.databases.database import db
 
 class UserRepository:
     def __init__(self):

@@ -2,7 +2,7 @@
 Certificate database model.
 This model represents a diamond certification document, mapped directly to the database.
 """
-from src.infrastructure.databases.database import db
+from infrastructure.databases.database import db
 from sqlalchemy.sql import func
 from sqlalchemy import Numeric
 

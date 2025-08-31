@@ -2,7 +2,7 @@
 User database models.
 These models map directly to the database tables for users and their related entities.
 """
-from src.infrastructure.databases.database import db
+from infrastructure.databases.database import db
 from sqlalchemy.sql import func
 
 class Role(db.Model):

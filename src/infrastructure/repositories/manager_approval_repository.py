@@ -1,8 +1,8 @@
 """
 ManagerApprovalRepository for handling database operations related to ManagerApproval.
 """
-from src.infrastructure.models.manager_approval import ManagerApproval
-from src.infrastructure.databases.database import db
+from infrastructure.models.manager_approval import ManagerApproval
+from infrastructure.databases.database import db
 
 class ManagerApprovalRepository:
     def __init__(self):

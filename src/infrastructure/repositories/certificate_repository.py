@@ -1,8 +1,8 @@
 """
 CertificateRepository for handling database operations related to Certificate.
 """
-from src.infrastructure.models.certificate import Certificate
-from src.infrastructure.databases.database import db
+from infrastructure.models.certificate import Certificate
+from infrastructure.databases.database import db
 
 class CertificateRepository:
     def __init__(self):

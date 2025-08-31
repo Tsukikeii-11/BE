@@ -1,7 +1,7 @@
 """
 AssessmentReceiptService for business logic related to assessment receipts.
 """
-from src.infrastructure.repositories.assessment_receipt_repository import AssessmentReceiptRepository
+from infrastructure.repositories.assessment_receipt_repository import AssessmentReceiptRepository
 from typing import Dict, Any, Optional, List
 
 class AssessmentReceiptService:

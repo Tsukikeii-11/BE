@@ -1,8 +1,8 @@
 """
 AssessmentRequestRepository for handling database operations related to AssessmentRequest.
 """
-from src.infrastructure.models.assessment_request import AssessmentRequest
-from src.infrastructure.databases.database import db
+from infrastructure.models.assessment_request import AssessmentRequest
+from infrastructure.databases.database import db
 
 class AssessmentRequestRepository:
     def __init__(self):

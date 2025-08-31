@@ -2,20 +2,20 @@
 A simple dependency injection container using a dictionary.
 This helps manage and inject dependencies throughout the application.
 """
-from src.infrastructure.repositories.user_repository import UserRepository
-from src.infrastructure.repositories.service_repository import ServiceRepository
-from src.infrastructure.repositories.assessment_request_repository import AssessmentRequestRepository
-from src.infrastructure.repositories.assessment_receipt_repository import AssessmentReceiptRepository
-from src.infrastructure.repositories.assessment_result_repository import AssessmentResultRepository
-from src.infrastructure.repositories.certificate_repository import CertificateRepository
-from src.infrastructure.repositories.manager_approval_repository import ManagerApprovalRepository
-from src.services.user_service import UserService
-from src.services.service_service import ServiceService
-from src.services.assessment_request_service import AssessmentRequestService
-from src.services.assessment_receipt_service import AssessmentReceiptService
-from src.services.assessment_result_service import AssessmentResultService
-from src.services.certificate_service import CertificateService
-from src.services.manager_approval_service import ManagerApprovalService
+from infrastructure.repositories.user_repository import UserRepository
+from infrastructure.repositories.service_repository import ServiceRepository
+from infrastructure.repositories.assessment_request_repository import AssessmentRequestRepository
+from infrastructure.repositories.assessment_receipt_repository import AssessmentReceiptRepository
+from infrastructure.repositories.assessment_result_repository import AssessmentResultRepository
+from infrastructure.repositories.certificate_repository import CertificateRepository
+from infrastructure.repositories.manager_approval_repository import ManagerApprovalRepository
+from services.user_service import UserService
+from services.service_service import ServiceService
+from services.assessment_request_service import AssessmentRequestService
+from services.assessment_receipt_service import AssessmentReceiptService
+from services.assessment_result_service import AssessmentResultService
+from services.certificate_service import CertificateService
+from services.manager_approval_service import ManagerApprovalService
 
 # The container dictionary to hold instances of our dependencies
 container = {}

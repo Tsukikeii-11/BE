@@ -2,7 +2,7 @@
 AssessmentResult database model.
 This model represents the final result of a diamond assessment, mapped directly to the database.
 """
-from src.infrastructure.databases.database import db
+from infrastructure.databases.database import db
 from sqlalchemy.sql import func
 from sqlalchemy import Numeric
 

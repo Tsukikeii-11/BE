@@ -1,7 +1,7 @@
 """
 UserService for business logic related to users.
 """
-from src.infrastructure.repositories.user_repository import UserRepository
+from infrastructure.repositories.user_repository import UserRepository
 from typing import Dict, Any, Optional
 
 class UserService:

@@ -1,7 +1,7 @@
 """
 ManagerApprovalService for business logic related to manager approvals.
 """
-from src.infrastructure.repositories.manager_approval_repository import ManagerApprovalRepository
+from infrastructure.repositories.manager_approval_repository import ManagerApprovalRepository
 from typing import Dict, Any, Optional, List
 
 class ManagerApprovalService:

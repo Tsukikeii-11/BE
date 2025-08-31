@@ -2,7 +2,7 @@
 ManagerApproval database model.
 This model represents a manager's approval or rejection of an assessment request.
 """
-from src.infrastructure.databases.database import db
+from infrastructure.databases.database import db
 from sqlalchemy.sql import func
 
 class ManagerApproval(db.Model):
